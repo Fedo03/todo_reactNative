@@ -32,16 +32,16 @@ const Tests = () => {
 
      
 
-      function ev(lis) {
-        console.log(lis);
+      function ev(nextAppState) {
+        console.log(nextAppState);
         
-        if(AppState.match(/inactive|background/) && lis === 'active') {
+        if(AppState.match(/inactive|background/) && nextAppState === 'active') {
           setMount(true)
-        } else if(AppState === 'active' && lis.match(/inactive|background/)){
+        } else if(AppState === 'active' && nextAppState.match(/inactive|background/)){
           setMount(false)
         }
 
-        setAstate(lis)
+        setAstate(nextAppState)
       }
 
 
@@ -54,7 +54,7 @@ const Tests = () => {
      
       ) 
 
-     }, [aState])
+     }, [])
 
      function done() {
       alert("add alarm") ;
