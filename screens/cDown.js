@@ -68,7 +68,7 @@ var stl = StyleSheet.create({
         },
      time : {
         left : 80,
-        top: 250,
+        top: 150,
         color : "black",
         fontSize : 50
         }

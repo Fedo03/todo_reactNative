@@ -1,85 +1,50 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { AppState, View, Text, SafeAreaView } from 'react-native';
 
-import {
-  AppState,
-    View,
-    Text,
-    Button,
-    SafeAreaView,
-    TextInput,
-    
-
-} from 'react-native'
-
-import CountDown from 'react-native-countdown-component'
-
-import {useState, useEffect } from 'react'
 
 
 const Tests = () => {
+  const [count, setCount] = useState(2000);
+  const [hour, setHour] = useState(0);
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(60);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount((prevCount) => prevCount - 1);
+    }, 1000);
 
+    return () => clearInterval(intervalId);
+  }, []);
 
-      
-     const [count, setCount] = useState(10)
-     const [aState, setAstate] = useState(AppState.currentState)
-     const [mount, setMount] = useState(true)
+  useEffect(() => {
+    let remainingSeconds = count;
 
-     useEffect(()=> {
-       setCount(15)
-     },[count] )
-         
+    const hours = Math.floor(remainingSeconds / 3600);
+    remainingSeconds %= 3600;
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds % 60;
 
-     
+    setHour(hours);
+    setMin(minutes);
+    setSec(seconds);
 
-      function ev(nextAppState) {
-        console.log(nextAppState);
-        
-        if(AppState.match(/inactive|background/) && nextAppState === 'active') {
-          setMount(true)
-        } else if(AppState === 'active' && nextAppState.match(/inactive|background/)){
-          setMount(false)
-        }
+    if (count <= 0) {
+      // Timer has reached zero, you may handle this condition here
+      clearInterval(intervalId);
+    }
+  }, [count]);
 
-        setAstate(nextAppState)
-      }
-
-
-      useEffect(()=> {
-     const listen = AppState.addEventListener("change", ev)
-
-     return (
-    
-     listen.remove()
-     
-      ) 
-
-     }, [])
-
-     function done() {
-      alert("add alarm") ;
-    
-     }
-     
   return (
+    <SafeAreaView>
+      <View>
+        <Text style={{ color: 'black' }}>
+          {hour.toString().padStart(2, '0')} : {min.toString().padStart(2, '0')} :{' '}
+          {sec.toString().padStart(2, '0')}
+        </Text>
+      </View>
+    </SafeAreaView>
+  );
+};
 
-      <SafeAreaView>
-        <View>
-      <Text>
-       { mount && <CountDown 
-            until={count}
-            onFinish={done}
-            size={20}
-            timeToShow={['H','M','S']}
-            digitalStyle={{backgroundColor:"rgb(255,255,255 )"}}
-            /> }
-           </Text>
-       </View>
-       <Text style={{color:'black'}}>{aState}</Text>
-        </SafeAreaView>
-
-  )
-
-}
-
-export default Tests
+export default Tests;

@@ -1,38 +1,13 @@
 import React, {useState, useEffect} from "react";
-import { AppState,Text, View } from "react-native";
+import {Alert,SafeAreaView,Text, View, StyleSheet } from "react-native";
 import CountDown from 'react-native-countdown-component'
 
 const Count = (props) => {
 
     var date = props.time
    console.log(date)
-   const [count, setCount] = useState(0)
-   const [isActive, setIsActive] = useState(true)
+  
 
-   useEffect(() => {
-
-
-    
-const handleAppStateChange = (newState) => {
-    if (newState === 'active') {
-        setIsActive(true); 
-        console.log("true")
-    } else {
-        setIsActive(false); 
-        console.log("false")
-    }
-};
-
-console.log('hey')
-AppState.addEventListener('change', handleAppStateChange);
-           
-return () => {
-    AppState.removeEventListener('change', handleAppStateChange);
-}; },[]);
-
-useEffect(() => {
-
-  function calculations(){
    var curr = new Date()
    var currH = curr.getHours()
    var currM = curr.getMinutes()
@@ -40,50 +15,71 @@ useEffect(() => {
  
    var dates = date.split(":")
    var dates1 = dates[1].split(" ")
-   var hour = Number(dates[0]) 
-   var min = Number(dates1[0])
+   var hours = Number(dates[0]) 
+   var mins = Number(dates1[0])
    var m = dates1[1]
 
    if(m == "pm") {
-    hour += 12
-}
+    hours += 12
+   }
 
-   var upMin = ((hour * 60) + min) 
+   var upMin = ((hours * 60) + mins) 
    var uMin = ((currH * 60) + currM)
    var cdown = upMin - uMin
    
   const totalSec = cdown * 60
 
-  setCount(totalSec)
-  console.log(count + "count")
+  const [count, setCount] = useState(totalSec);
+  const [hour, setHour] = useState(0);
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(60);
 
-}
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount((prevCount) => prevCount - 1);
+    }, 1000);
 
-calculations();
+    return () => clearInterval(intervalId);
+  }, []);
 
+  useEffect(() => {
+    let remainingSeconds = count;
 
+    const hours = Math.floor(remainingSeconds / 3600);
+    remainingSeconds %= 3600;
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds % 60;
 
-    
-        
-    }, [date]);
+    setHour(hours);
+    setMin(minutes);
+    setSec(seconds);
 
+    if (count <= 0) {
+     alert("add an alarm")
+      clearInterval(intervalId);
+    }
+  }, [count]);
 
+  return (
+    <SafeAreaView>
+      <View style={styl.txt}>
+        <Text style={{ color: 'black' , fontSize 50}}>
+          {hour.toString().padStart(2, '0')} : {min.toString().padStart(2, '0')} :{' '}
+          {sec.toString().padStart(2, '0')}
+        </Text>
+      </View>
+    </SafeAreaView>
+  );
+};
 
-    return (
-    
-       <View>
-      <Text>
-       { count && <CountDown 
-            until={count}
-            onFinish={()=> alert("add alarm")}
-            size={20}
-            timeToShow={['H','M','S']}
-            digitalStyle={{backgroundColor:"rgb(255,255,255 )"}}
-            /> }
-           </Text>
-       </View>
-        
-    )
-}
+const styl = StyleSheet.create({
+  txt :{
+    color : black,
+    height 50,
+    weidth : 100,
+    left : 80,
+    top: 250,
+  }
+})
 
 export default Count;  
