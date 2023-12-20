@@ -70,7 +70,7 @@ var stl = StyleSheet.create({
         left : 80,
         top: 150,
         color : "black",
-        fontSize : 50
+        fontSize : 30
         }
 
   })

@@ -56,14 +56,14 @@ const Count = (props) => {
 
     if (count <= 0) {
      alert("add an alarm")
-      clearInterval(intervalId);
+      
     }
   }, [count]);
 
   return (
     <SafeAreaView>
       <View style={styl.txt}>
-        <Text style={{ color: 'black' , fontSize 50}}>
+        <Text style={{ color: 'black' , fontSize : 50}}>
           {hour.toString().padStart(2, '0')} : {min.toString().padStart(2, '0')} :{' '}
           {sec.toString().padStart(2, '0')}
         </Text>
@@ -74,8 +74,8 @@ const Count = (props) => {
 
 const styl = StyleSheet.create({
   txt :{
-    color : black,
-    height 50,
+    color : "black",
+    height :50,
     weidth : 100,
     left : 80,
     top: 250,
