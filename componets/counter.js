@@ -75,10 +75,10 @@ const Count = (props) => {
 const styl = StyleSheet.create({
   txt :{
     color : "black",
-    height :50,
-    weidth : 100,
-    left : 80,
-    top: 250,
+    height :60,
+    weidth : 90,
+    left : 60,
+    top: 200,
   }
 })
 

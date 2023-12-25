@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { AppState, View, Text, SafeAreaView } from 'react-native';
-import SoundPlayer from 'react-native-sound-player';
+import { AppState, View, Text, SafeAreaView , Button} from 'react-native';
+var Sound = require('react-native-sound')
 
 
 const Tests = () => {
 
-  SoundPlayer.playSoundFile('John Cena Theme Song- The Time Is Now','mp3')
+  function play() {
+  try {
+  //SoundPlayer.playSoundFile('./John Cena Theme Song- The Time Is Now','mp3')
+  } catch (error) {
+    console.log("err bro :" + error)
+  }
+  }
   
   return (
     <SafeAreaView>
       <View>
-        <Text style={{ color: 'black' }}>
-          
-        </Text>
+      <Button onPress={play}  title="play"/>
       </View>
     </SafeAreaView> 
   );

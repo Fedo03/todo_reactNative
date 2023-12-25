@@ -62,15 +62,15 @@ var stl = StyleSheet.create({
     name : {
          
         fontSize : 30, 
-        color : "black",
+        color : "grey",
         textAlign : "center",
 
         },
      time : {
-        left : 80,
-        top: 150,
-        color : "black",
-        fontSize : 30
+        left : 140,
+        top: 30,
+        color : "grey",
+        fontSize : 20
         }
 
   })
